@@ -48,6 +48,26 @@
       transform: scale(1.05);
     }
 
+    .quiz-section {
+      padding: 2rem;
+      background-color: #fff0f5;
+      text-align: center;
+    }
+
+    .quiz-question {
+      margin: 1rem 0;
+    }
+
+    input[type=range] {
+      width: 60%;
+    }
+
+    #score-result {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
     footer {
       text-align: center;
       padding: 1rem;
@@ -62,7 +82,7 @@
   </header>
 
   <section class="fun-facts">
-    <h2>Fun Facts About Mom</h2>
+    <h2>Fun Facts About Mother's Day</h2>
     <div class="facts-container">
       <div class="fact-card">Mother's Day was first celebrated in 1908.</div>
       <div class="fact-card">Carnations are the traditional flower of Mother's Day.</div>
@@ -70,8 +90,59 @@
     </div>
   </section>
 
+  <section class="quiz-section">
+    <h2>How Similar Are You to My Mom?</h2>
+    <form id="similarity-quiz">
+      <div class="quiz-question">
+        <label>How much do you like coffee? (1-10)</label><br>
+        <input type="range" name="coffee" min="1" max="10" value="5">
+      </div>
+      <div class="quiz-question">
+        <label>How much do you enjoy gardening? (1-10)</label><br>
+        <input type="range" name="gardening" min="1" max="10" value="5">
+      </div>
+      <div class="quiz-question">
+        <label>How early do you wake up? (1 = very late, 10 = very early)</label><br>
+        <input type="range" name="early" min="1" max="10" value="5">
+      </div>
+      <div class="quiz-question">
+        <label>How much do you love dogs? (1-10)</label><br>
+        <input type="range" name="dogs" min="1" max="10" value="5">
+      </div>
+      <div class="quiz-question">
+        <label>How organized are you? (1-10)</label><br>
+        <input type="range" name="organized" min="1" max="10" value="5">
+      </div>
+      <button type="submit">See Your Score</button>
+    </form>
+    <div id="score-result"></div>
+  </section>
+
   <footer>
     <p>Created with ❤️</p>
   </footer>
+
+  <script>
+    document.getElementById('similarity-quiz').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const correctAnswers = {
+        coffee: 8,
+        gardening: 7,
+        early: 9,
+        dogs: 10,
+        organized: 9
+      };
+
+      let score = 100;
+
+      for (const [key, correct] of Object.entries(correctAnswers)) {
+        const userValue = parseInt(document.querySelector(`[name=${key}]`).value);
+        score -= Math.abs(correct - userValue);
+      }
+
+      document.getElementById('score-result').textContent = `You scored ${score}/100 on the similarity test!`;
+    });
+  </script>
 </body>
 </html>
